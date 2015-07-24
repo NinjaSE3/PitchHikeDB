@@ -1,0 +1,70 @@
+use pitchhike
+db.users.remove({});
+var baseLng = 139.65534000898916;
+var baseLat = 35.63588652257869;
+var diffLng = 139.75730686689930 - baseLng;
+var diffLat = 35.67661462940957 - baseLat;
+var languages = ['Japanese', 'English', 'Chinese'];
+var names = ['Emi','Lee','John','Tim','Mary','Brandon','Mark','Kate','Ken','Alex']
+var images = ['001.jpg','002.jpg','003.jpg','004.jpg','005.jpg','006.jpg','007.jpg','008.jpg','009.jpg','010.jpg']
+var ranks = [1,2,3,4,5]
+var lastnames = ['Smith','Brown','Johnson','Jones','Williams','Davis','Miller','Wilson','Taylor']
+var birthdays = ['July 4','August 20','April 12','October 22','November 5','March 3']
+var genders = ['Man','Woman']
+var hobbies = ['Reading','Watching TV','Family time','Going to Movies','Fishing','Computer','Gardening','Walking','Exercise','Traveling',]
+var jobs = ['Retail salesperson','Cashier','office clark','Nurse','Bookkeeping','Teacher','Cook','Consultant','Childcare']
+var dreams = ['I want a ...']
+var froms = ['United States','United Kingdom']
+for (var i=1; i<=100; i++) {
+  var myUserid = ("00000"+i).slice(-6);
+  var myLng = baseLng + (Math.random() * diffLng);
+  var myLat = baseLat + (Math.random() * diffLat);
+  var myLanguage = languages[
+    Math.floor(Math.random() * languages.length)
+  ];
+  var myName = names[
+    Math.floor(Math.random() * names.length)]
+  ;
+  var myImage = images[
+    Math.floor(Math.random() * images.length)];
+  var myFullname = myName + ' ' + lastnames[
+    Math.floor(Math.random() * lastnames.length)];
+  var myBirthday = birthdays[
+    Math.floor(Math.random() * birthdays.length)];
+  var myGender = genders[
+    Math.floor(Math.random() * genders.length)];
+  var myHobby = hobbies[
+    Math.floor(Math.random() * hobbies.length)];
+  var myJob = jobs[
+    Math.floor(Math.random() * jobs.length)];
+  var myDream = dreams[
+    Math.floor(Math.random() * dreams.length)];
+  var myFrom = froms[
+    Math.floor(Math.random() * froms.length)];
+db.users.save({
+    userid  : myUserid,
+    password: myUserid,
+    location: [myLng, myLat],
+    language: myLanguage,
+    name    : myName,
+    image   : myImage,
+    fullname: myFullname,
+    birthday: myBirthday,
+    gender  : myGender,
+    hobby   : myHobby,
+    job     : myJob,
+    dream   : myDream,
+    from    : myFrom
+  });
+}
+db.users.ensureIndex({ location:"2d", language:1});
+
+db.topics.drop();
+
+for (var i=1; i<=100; i++) {
+  myTopic = "test topic" + i;
+  db.topics.save({
+    topic: myTopic
+  });
+}
+
